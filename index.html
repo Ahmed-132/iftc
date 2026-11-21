@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Islam for the Curious</title><style>*{margin:0;box-sizing:border-box}body{font-family:Inter,system-ui,sans-serif;background:radial-gradient(ellipse at 50% 0%,#22594A,#0A221A 70%) fixed;color:#F3EEE2;min-height:100vh;line-height:1.6}
+.wrap{max-width:720px;margin:0 auto;padding:48px 20px 80px}header{display:flex;align-items:center;gap:16px;margin-bottom:36px}header img{width:64px;height:64px;border-radius:50%}
+h1{font-family:'Cormorant Garamond',serif;font-size:42px;line-height:1.1;color:#F1D9A0}h2{font-family:'Cormorant Garamond',serif;color:#F1D9A0;font-size:26px;margin:28px 0 8px}
+a{color:#F1D9A0}nav{display:flex;gap:18px;flex-wrap:wrap;margin-top:6px;font-size:14px}.card{background:rgba(8,26,20,.6);border:1px solid rgba(233,200,119,.5);border-radius:18px;padding:24px;margin-top:24px}
+.btn{display:inline-block;background:linear-gradient(170deg,#FFF3C9,#E9C877 40%,#B98A3A);color:#0F2C22;font-weight:700;padding:14px 26px;border-radius:999px;text-decoration:none;border:0;font-size:16px;cursor:pointer}
+.muted{color:#A9BDB3;font-size:14px}code{background:rgba(0,0,0,.35);padding:10px;border-radius:8px;display:block;word-break:break-all;margin-top:8px;font-size:13px}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;600;700&display=swap"></head><body><div class="wrap">
+<header><img src="logo.png" alt="Islam for the Curious logo"><div><h1>Islam for the Curious</h1><nav><a href="./">Home</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></nav></div></header><p>Short, beautiful videos about the stories of the prophets, the Qur'an and the Sunnah, for anyone who is curious about Islam.</p>
+<div class="card"><h2 style="margin-top:0">IFTC Poster</h2><p>IFTC Poster is our private tool to publish our own, pre-approved videos to our own Islam for the Curious accounts at the scheduled time. It is not offered to other users.</p>
+<div id="connect" style="margin-top:18px"><button class="btn" id="go">Connect TikTok</button><p class="muted" style="margin-top:10px">Connects the owner's TikTok account (scopes: user.info.basic, video.publish).</p></div>
+<div id="done" style="display:none;margin-top:18px"><p style="font-size:20px;font-weight:700;color:#BFE6D6">✓ TikTok connected</p><p class="muted">Authorization received. Approved videos will now be published to this account at their scheduled time.</p>
+<details style="margin-top:10px"><summary class="muted">Authorization code (for the owner)</summary><code id="code"></code></details></div>
+<div id="err" style="display:none;margin-top:18px;color:#F2A3A3"></div></div>
+<script src="config.js"></script>
+<script>
+const q=new URLSearchParams(location.search);
+if(q.get('code')){document.getElementById('connect').style.display='none';document.getElementById('done').style.display='block';document.getElementById('code').textContent=q.get('code');}
+if(q.get('error')){const e=document.getElementById('err');e.style.display='block';e.textContent='TikTok: '+q.get('error')+' '+(q.get('error_description')||'');}
+document.getElementById('go').onclick=()=>{if(!window.IFTC||!IFTC.clientKey){alert('Client key not configured yet.');return}
+const state=Math.random().toString(36).slice(2);const u=new URL('https://www.tiktok.com/v2/auth/authorize/');
+u.search=new URLSearchParams({client_key:IFTC.clientKey,scope:'user.info.basic,video.publish',response_type:'code',redirect_uri:IFTC.redirectUri,state}).toString();location.href=u.toString();};
+</script>
+<p class="muted" style="margin-top:48px">Contact: direct message <strong>@islamforthecurious</strong> on Instagram or TikTok.</p></div></body></html>
