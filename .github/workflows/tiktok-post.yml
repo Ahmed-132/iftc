@@ -1,0 +1,25 @@
+name: TikTok post
+on:
+  workflow_dispatch:
+    inputs:
+      code:
+        description: "Autorisatiecode van ahmed-132.github.io/iftc na Connect TikTok"
+        required: true
+      title:
+        description: "Titel/onderschrift"
+        default: "He was forgiven… because of a thirsty dog #islam #islamforthecurious"
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "::add-mask::${{ inputs.code }}"
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install requests
+      - run: python tools/tiktok_post.py
+        env:
+          CODE: ${{ inputs.code }}
+          TITLE: ${{ inputs.title }}
+          CK: ${{ secrets.TIKTOK_CLIENT_KEY }}
+          CS: ${{ secrets.TIKTOK_CLIENT_SECRET }}
